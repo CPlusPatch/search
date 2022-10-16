@@ -47,3 +47,5 @@ export type SearxSearchResult = {
 	suggestions?: string[];
 	unresponsive_engines?: any[];
 }
+
+export type SearxAutoCompleteResult = [string, string[]]

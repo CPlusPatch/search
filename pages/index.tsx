@@ -2,18 +2,29 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useState, Fragment } from 'react';
 import { Transition } from "@headlessui/react";
+import { getAutoCompleteResults, encodeQuery } from "../utils/searx";
+import Router from 'next/router';
 
 const Home: NextPage = () => {
 	const [suggestions, setSuggestions] = useState<string[]>([]);
-	var onType = function(event: any) {
+	const onType = async function(event: any) {
 		const text = event.target.value;
 
 		if (text !== "") {
-			setSuggestions(["sugar free gluten recipes", "impostor among us", "donald trump free t-shirt"]);
+			const suggestions = await getAutoCompleteResults(encodeQuery(text));
+			setSuggestions(suggestions[1]);
 		} else {
 			setSuggestions([]);
 		}
 	}
+
+	const onKeyUp = async function(event: any) {
+		if (event.keyCode === 13) {
+			// Submit the search
+			Router.push(`/search?q=${encodeQuery(event.target.value)}`);
+		}
+	}
+
 	return (
 		<div className="w-full h-full">
 			<Head>
@@ -37,6 +48,7 @@ const Home: NextPage = () => {
 							}`}
 							placeholder="Search"
 							onChange={onType}
+							onKeyUp={onKeyUp}
 						/>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
