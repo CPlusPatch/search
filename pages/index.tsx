@@ -15,7 +15,7 @@ const Home: NextPage = () => {
 						className="text-6xl font-bold text-transparent font-inter bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text">
 						Search
 					</span>
-					<SearchBar/>
+					<SearchBar className="mt-10"/>
 				</div>
 			</div>
 		</div>

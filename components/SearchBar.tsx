@@ -3,7 +3,7 @@ import { Transition } from "@headlessui/react";
 import { getAutoCompleteResults, encodeQuery } from "../utils/searx";
 import Router from "next/router";
 
-const SearchBar = ({ className = "" }: { className?: string; }) => {
+const SearchBar = ({ className = "", shadow = true }: { className?: string; shadow?: boolean; }) => {
 	const [suggestions, setSuggestions] = useState<string[]>([]);
 	const [selectedSuggestion, setSelectedSuggestion] = useState<number>(-1);
 	const onType = async function (event: any) {
@@ -48,12 +48,12 @@ const SearchBar = ({ className = "" }: { className?: string; }) => {
 		}
 	};
 	return (
-		<div className="relative w-full mt-10">
+		<div className={`relative w-full ${className}`}>
 			<div className="relative">
 				<input
 					type="text"
 					className={`z-10 w-full px-4 py-2 border-2 border-gray-200 rounded-md
-							shadow-md outline-none ring-0 active:ring-0 ${
+							${shadow && "shadow-md"} outline-none ring-0 active:ring-0 ${
 								JSON.stringify(suggestions) !== "[]"
 									? "border-b-0 rounded-b-none shadow-none"
 									: ""
