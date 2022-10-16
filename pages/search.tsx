@@ -58,7 +58,7 @@ const Search: NextPage = () => {
 				</div>
 			</header>
 			{results && (
-				<ul className="px-16">
+				<ul className="flex flex-col gap-0 mx-16">
 					{results.results?.map(result => (
 						<SearchResult key={result.url} result={result}/>
 					))}
@@ -72,52 +72,55 @@ const Search: NextPage = () => {
 		result: Result;
 	}) => {
 	return (
-		<article className="w-2/5 px-1 py-4 m-10 bg-white border border-gray-300 rounded-md md:p-2 sm:py-4">
+		<article className="w-1/2 px-1 py-4 bg-white">
 			<div role="presentation">
 				<div>
 					<div className="pl-12 md:pl-10 xs:pl-10">
-						<h2 className="mb-2 text-2xl font-bold leading-7 hover:text-blue-600">
+						<div className="mb-2">
+							<a
+								href="/t/react"
+								className="flex items-center p-1 text-sm text-gray-600 hover:text-black">
+								{`${result.parsed_url[0]}://${result.parsed_url[1]}`}
+								{result.parsed_url[2].slice(1).split("/").map((part) => (
+									<>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											strokeWidth={2}
+											stroke="currentColor"
+											className="inline w-3 h-3 mt-1">
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												d="M8.25 4.5l7.5 7.5-7.5 7.5"
+											/>
+										</svg>
+
+										{part}
+									</>
+								))}
+							</a>
+						</div>
+						<h2 className="mb-1 text-xl leading-7 text-blue-500 duration-300 font-inter">
 							<a href={result.url} id="article-link-151230">
 								{result.title}
 							</a>
 						</h2>
-						<div className="mb-2">
-							<a
-								href="/t/react"
-								className="p-1 text-sm text-gray-600 hover:text-black">
-								<span className="text-opacity-50">#</span>
-								{result.category}
-							</a>
+						<div className="mb-1 leading-6 font-inter line-clamp-2">
+							{result.content}
 						</div>
-						<div className="mb-1 leading-6">{result.content}</div>
 						<div className="flex items-center justify-between">
-							<div className="flex">
-								<a
-									href="/hagnerd/setting-up-tailwind-with-create-react-app-4jd"
-									className="py-1 pl-1 pr-2 text-gray-600">
+								<div
+									className="flex items-center py-1 pl-1 pr-2 text-gray-600">
 									{getSearchEngineIcon(
 										result.engine,
-										"inline fill-current w-4 h-4")}
+										"inline fill-current w-4 h-4"
+									)}
 									<span className="inline ml-2 capitalize">
 										{result.engine}
 									</span>
-								</a>
-								<a
-									href="/hagnerd/setting-up-tailwind-with-create-react-app-4jd#comments"
-									className="py-1 pl-1 pr-2 text-sm text-gray-600 rounded hover:bg-gray-100 hover:text-black">
-									<svg
-										className="inline fill-current"
-										width="24"
-										height="24"
-										xmlns="http://www.w3.org/2000/svg">
-										<path d="M10.5 5h3a6 6 0 110 12v2.625c-3.75-1.5-9-3.75-9-8.625a6 6 0 016-6zM12 15.5h1.5a4.501 4.501 0 001.722-8.657A4.5 4.5 0 0013.5 6.5h-3A4.5 4.5 0 006 11c0 2.707 1.846 4.475 6 6.36V15.5z"></path>
-									</svg>
-									20
-									<span className="hidden md:inline">
-										&nbsp;comments
-									</span>
-								</a>
-							</div>
+								</div>
 						</div>
 					</div>
 				</div>
