@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import { Result, SearxSearchResult } from "../types/types";
-import { getSearchResults, getSearchEngineIcon } from "../utils/searx";
+import { getSearchResults, getSearchEngineIcon, decodeQuery } from "../utils/searx";
 
 const Search: NextPage = () => {
 	const { q } = useRouter().query;
@@ -30,7 +30,11 @@ const Search: NextPage = () => {
 					className="mr-2 text-xl font-bold text-transparent font-inter bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text">
 					Search
 				</span>
-				<SearchBar className="relative h-full w-96" shadow={false} />
+				<SearchBar
+					className="relative h-full w-96"
+					shadow={false}
+					defaultValue={decodeQuery(q!.toString())}
+				/>
 			</header>
 			{JSON.stringify(results) !== "{}" ? (
 				<ul className="flex flex-col gap-0 mx-16">

@@ -3,7 +3,15 @@ import { Transition } from "@headlessui/react";
 import { getAutoCompleteResults, encodeQuery } from "../utils/searx";
 import Router from "next/router";
 
-const SearchBar = ({ className = "", shadow = true }: { className?: string; shadow?: boolean; }) => {
+const SearchBar = ({
+	className = "",
+	shadow = true,
+	defaultValue = "",
+}: {
+	className?: string;
+	shadow?: boolean;
+	defaultValue?: string;
+}) => {
 	const [suggestions, setSuggestions] = useState<string[]>([]);
 	const [selectedSuggestion, setSelectedSuggestion] = useState<number>(-1);
 	const onType = async function (event: any) {
@@ -25,7 +33,9 @@ const SearchBar = ({ className = "", shadow = true }: { className?: string; shad
 				// Submit the search
 				Router.push(`/search?q=${encodeQuery(event.target.value)}`);
 			else
-				Router.push(`/search?q=${encodeQuery(suggestions[selectedSuggestion])}`);
+				Router.push(
+					`/search?q=${encodeQuery(suggestions[selectedSuggestion])}`
+				);
 		}
 
 		if (event.keyCode === 40) {
@@ -35,7 +45,6 @@ const SearchBar = ({ className = "", shadow = true }: { className?: string; shad
 			} else if (selectedSuggestion < suggestions.length - 1) {
 				setSelectedSuggestion(selectedSuggestion + 1);
 			}
-
 		}
 
 		if (event.keyCode === 38) {
@@ -54,13 +63,14 @@ const SearchBar = ({ className = "", shadow = true }: { className?: string; shad
 					type="text"
 					className={`z-10 w-full px-4 py-2 border-2 border-gray-200 rounded-md
 							${shadow && "shadow-md"} outline-none ring-0 active:ring-0 ${
-								JSON.stringify(suggestions) !== "[]"
-									? "border-b-0 rounded-b-none shadow-none"
-									: ""
-							}`}
+						JSON.stringify(suggestions) !== "[]"
+							? "border-b-0 rounded-b-none shadow-none"
+							: ""
+					}`}
 					placeholder="Search"
 					onChange={onType}
 					onKeyUp={onKey}
+					defaultValue={defaultValue}
 				/>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +100,14 @@ const SearchBar = ({ className = "", shadow = true }: { className?: string; shad
 						<div className="w-full p-1 bg-white border-2 border-t-0 border-gray-200 rounded-b-md">
 							<ul className="even:border-b-2 even:border-gray-100 font-inter">
 								{suggestions.map((s) => (
-									<Suggestion text={s} key={s} selected={s === suggestions[selectedSuggestion]}/>
+									<Suggestion
+										text={s}
+										key={s}
+										selected={
+											s ===
+											suggestions[selectedSuggestion]
+										}
+									/>
 								))}
 							</ul>
 						</div>
@@ -103,19 +120,25 @@ const SearchBar = ({ className = "", shadow = true }: { className?: string; shad
 	);
 };
 
-const Suggestion = ({ text, selected  }: {
+const Suggestion = ({
+	text,
+	selected,
+}: {
 	text: string;
 	selected: boolean;
 }) => {
 	const redirectToSearch = (event: any) => {
 		Router.push(`/search?q=${encodeQuery(text)}`);
-	}
+	};
 	return (
 		<li
-			className={`p-2 duration-200 rounded-sm hover:bg-gray-100 ${selected && "bg-gray-100"}`} onClick={redirectToSearch}>
+			className={`p-2 duration-200 rounded-sm hover:bg-gray-100 ${
+				selected && "bg-gray-100"
+			}`}
+			onClick={redirectToSearch}>
 			{text}
 		</li>
-	)
-}
+	);
+};
 
 export default SearchBar;
