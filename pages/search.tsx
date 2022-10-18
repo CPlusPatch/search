@@ -18,10 +18,6 @@ const Search: NextPage = () => {
 			fn()
 		}
 	});
-
-	const [suggestions, setSuggestions] = useState<string[]>([]);
-	var onType = function (event: any) {
-	};
 	return (
 		<div className="flex flex-col w-full h-full">
 			<header className="flex items-center w-full h-20 p-5 border-b-2 border-b-gray-100">

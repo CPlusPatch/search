@@ -1,4 +1,3 @@
-import { match } from "assert";
 import { SearxSearchResult, SearxAutoCompleteResult } from "../types/types";
 
 function encodeQuery(query: string): string {
