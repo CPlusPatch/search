@@ -1,11 +1,11 @@
 import { SearxSearchResult, SearxAutoCompleteResult } from "../types/types";
 
 function encodeQuery(query: string): string {
-	return encodeURIComponent(query).replace("%20", "+");
+	return encodeURIComponent(query).replaceAll("%20", "+");
 }
 
 function decodeQuery(query: string): string {
-	return decodeURIComponent(query.replace("+", "%20"));
+	return decodeURIComponent(query.replaceAll("+", "%20"));
 }
 
 async function getSearchResults(query: string): Promise<SearxSearchResult> {

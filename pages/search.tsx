@@ -29,13 +29,13 @@ const Search: NextPage = () => {
 				<SearchBar
 					className="relative h-full w-96"
 					shadow={false}
-					defaultValue={decodeQuery(q!.toString())}
+					defaultValue={q ? decodeQuery(q!.toString()) : ""}
 				/>
 			</header>
 			{JSON.stringify(results) !== "{}" ? (
 				<ul className="flex flex-col gap-0 mx-16">
 					{results.results?.map((result) => (
-						<SearchResult key={result.url} result={result} />
+						<SearchResult key={result.title} result={result} />
 					))}
 				</ul>
 			) : (
@@ -96,7 +96,7 @@ const Search: NextPage = () => {
 							</a>
 						</div>
 						<h2 className="mb-1 text-xl leading-7 text-blue-500 duration-300 font-inter">
-							<a href={result.url} id="article-link-151230">
+							<a href={result.url} id="article-link-151230" target={"_blank"} rel="noreferrer">
 								{result.title}
 							</a>
 						</h2>
