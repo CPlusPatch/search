@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import { Result, SearxSearchResult } from "../types/types";
-import { getSearchResults, getSearchEngineIcon, decodeQuery } from "../utils/searx";
+import { getSearchEngineIcon, decodeQuery, encodeQuery } from "../utils/searx";
 
 const Search: NextPage = () => {
 	const { q } = useRouter().query;
@@ -11,7 +11,7 @@ const Search: NextPage = () => {
 	
 	useEffect(() => {
 		async function fn() {
-			const results: SearxSearchResult = await getSearchResults(q!.toString());
+			const results: SearxSearchResult = await (await fetch(`/api/results?q=${encodeQuery(q!.toString())}`)).json();
 			setResults(results);
 		}
 		if (window !== undefined && q && JSON.stringify(results) === "{}" ) {
@@ -35,7 +35,7 @@ const Search: NextPage = () => {
 			{JSON.stringify(results) !== "{}" ? (
 				<ul className="flex flex-col gap-0 mx-16">
 					{results.results?.map((result) => (
-						<SearchResult key={result.title} result={result} />
+						<SearchResult key={result.id} result={result} />
 					))}
 				</ul>
 			) : (

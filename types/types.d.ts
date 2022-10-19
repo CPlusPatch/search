@@ -12,6 +12,7 @@ export interface Result {
 	pretty_url: string;
 	open_group: boolean;
 	close_group?: boolean;
+	id?: string;
 }
 
 export interface Url {
@@ -48,3 +49,10 @@ export type SearxSearchResult = {
 }
 
 export type SearxAutoCompleteResult = [string, string[]]
+
+export type Config = {
+	shortName: string;
+	longName: string;
+	description: string;
+	baseUrl: string;
+}

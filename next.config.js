@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  async headers() {
+  /* async headers() {
 	return [
 		{
 			source: "/opensearch.xml",
@@ -14,7 +14,7 @@ const nextConfig = {
 			],
 		},
 	];
-  }
+  } */
 }
 
 module.exports = nextConfig
